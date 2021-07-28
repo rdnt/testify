@@ -126,7 +126,6 @@ func Run(t *testing.T, suite TestingSuite) {
 			F: func(t *testing.T) {
 				parentT := suite.T()
 				suite.SetT(t)
-				defer failOnPanic(t)
 				defer func() {
 					if stats != nil {
 						passed := !t.Failed()
@@ -143,6 +142,7 @@ func Run(t *testing.T, suite TestingSuite) {
 
 					suite.SetT(parentT)
 				}()
+				defer failOnPanic(t)
 
 				if setupTestSuite, ok := suite.(SetupTestSuite); ok {
 					setupTestSuite.SetupTest()
